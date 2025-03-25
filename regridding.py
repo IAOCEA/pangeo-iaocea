@@ -42,7 +42,15 @@ def aggregation_regridding(grid_info: xdggs.DGGSInfo, ds: xr.Dataset):
 
     Parameters
     ----------
+    grid_info : xdggs.DGGSInfo
+        The grid info object
+    ds : xr.Dataset
+        The dataset to regrid
 
+    Returns
+    -------
+    regridded : xr.Dataset
+        The regridded dataset
     """
     lon_name = ds.cf.coordinates["longitude"][0]
     lat_name = ds.cf.coordinates["latitude"][0]
