@@ -82,7 +82,7 @@ def aggregation_regridding(grid_info: xdggs.DGGSInfo, ds: xr.Dataset):
 
     return (
         stacked.assign_coords({"cell_ids": cell_ids})
-        .groupby(cell_ids=cell_grouper)
+        .groupby(cell_ids=cell_grouper, eagerly_compute_group=False)
         .mean()
         .rename_dims({"cell_ids": "cells"})
         .assign_coords({"cell_ids": ("cells", all_cell_ids)})
