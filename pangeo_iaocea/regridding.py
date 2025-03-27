@@ -25,16 +25,28 @@ def categorize_points(grid_info: xdggs.DGGSInfo, longitude, latitude):
         raise ValueError(
             f"coordinate dims don't match: {longitude.dims} != {latitude.dims}"
         )
-    elif len(longitude.dims) != 1:
-        raise ValueError(f"coordinates must be 1D (got dims: {longitude.dims})")
 
-    return xr.apply_ufunc(
+    if longitude.ndim == 0:
+        original_dims = 0
+        longitude = longitude.expand_dims("points")
+        latitude = latitude.expand_dims("points")
+    elif len(longitude.dims) != 1:
+        raise ValueError(f"coordinates must be 0D or 1D (got dims: {longitude.dims})")
+    else:
+        original_dims = 1
+
+    result = xr.apply_ufunc(
         grid_info.geographic2cell_ids,
         longitude.astype("float64"),
         latitude.astype("float64"),
         keep_attrs=False,
         dask="parallelized",
     ).assign_attrs(grid_info.to_dict())
+
+    if original_dims == 0:
+        return result.squeeze()
+    else:
+        return result
 
 
 def aggregation_regridding(grid_info: xdggs.DGGSInfo, ds: xr.Dataset):
