@@ -1,6 +1,7 @@
 import xarray as xr
 import xdggs  # noqa: F401
 import cf_xarray  # noqa: F401
+import numpy as np
 
 
 def categorize_points(grid_info: xdggs.DGGSInfo, longitude, latitude):
@@ -64,10 +65,14 @@ def aggregation_regridding(grid_info: xdggs.DGGSInfo, ds: xr.Dataset):
     )
     cell_ids = categorize_points(grid_info, stacked[lon_name], stacked[lat_name])
 
+    all_cell_ids = np.unique(cell_ids.data).compute()
+    cell_grouper = xr.groupers.UniqueGrouper(labels=all_cell_ids)
+
     return (
         stacked.assign_coords({"cell_ids": cell_ids})
-        .groupby("cell_ids")
+        .groupby(cell_ids=cell_grouper)
         .mean()
         .rename_dims({"cell_ids": "cells"})
-        .dggs.decode()
+        .assign_coords({"cell_ids": ("cells", all_cell_ids)})
+        .dggs.decode(grid_info)
     )
