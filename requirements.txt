@@ -1,0 +1,20 @@
+shapely
+pystac-client
+pystac
+stac-geoparquet
+geoparquet
+geopandas
+pyarrow
+lonboard
+stac-insitu @ git+https://github.com/iaocea/stac-insitu.git@main
+xdggs
+xarray
+numpy
+pandas
+matplotlib
+h5netcdf
+fsspec
+flox
+cf-xarray
+dask
+distributed
