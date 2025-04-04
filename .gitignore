@@ -1,3 +1,18 @@
+# python artifacts
+*.py[cod]
+__pycache__/*
+*.egg-info
+
+# editor swap files
+*~
+\#*#
+
+# tool caches
 .ipynb_checkpoints
 .virtual_documents
 /.prettier_cache/
+
+# data files
+*.zarr
+*.nc
+*.npy
