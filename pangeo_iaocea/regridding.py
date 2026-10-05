@@ -1,7 +1,7 @@
-import xarray as xr
-import xdggs  # noqa: F401
 import cf_xarray  # noqa: F401
 import numpy as np
+import xarray as xr
+import xdggs
 
 
 def categorize_points(grid_info: xdggs.DGGSInfo, longitude, latitude):
