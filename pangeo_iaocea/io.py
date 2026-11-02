@@ -1,9 +1,10 @@
 import json
 import pathlib
-import stac_geoparquet
+
+import geopandas as gpd
 import pystac
 import shapely
-import geopandas as gpd
+import stac_geoparquet
 
 
 def dump_to_ndjson(collection, path: pathlib.Path):
