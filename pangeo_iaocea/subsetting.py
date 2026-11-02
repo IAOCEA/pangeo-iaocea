@@ -1,5 +1,5 @@
-import numpy as np
 import cf_xarray  # noqa: F401
+import numpy as np
 
 
 def polygon_to_bounds(polygon):
